@@ -18,28 +18,38 @@
           <th>Myan</th>
           <th>Eng</th>
           <th>Math</th>
+          <th>Total</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="stu in students">
-          <td>1</td>
+        <tr v-for="(stu,index) in students">
+          <td>{{++index}}</td>
           <td>{{stu.name}}</td>
           <td>Female</td>
           <td>
             <img src="susu.jpeg" alt="" width="50px">
           </td>
           <td>
-            D / P / F
+            <span v-if="stu.myan>=75">D</span>
+            <span v-else-if="stu.myan>=40 && stu.myan<75">P</span>
+            <span v-else>F</span>
           </td>
           <td>
-            D / P / F
+            <span v-if="stu.eng>=75">D</span>
+            <span v-else-if="stu.eng>=40 && stu.eng<75">P</span>
+            <span v-else>F</span>
           </td>
           <td>
-            D / P / F
+            <span v-if="stu.math>=80">D</span>
+            <span v-else-if="stu.math>=40 && stu.math<80">P</span>
+            <span v-else>F</span>
           </td>
           <td>
-            <button v-on:click="detail">Detail</button>
+            {{stu.myan+stu.eng+stu.math}}
+          </td>
+          <td>
+            <button v-on:click="detail(--index)">Detail</button>
           </td>
         </tr>
       </tbody>
@@ -56,8 +66,13 @@
         ]
       },
       methods:{
-        detail(){
-          alert('hi')
+        detail(index){
+          let mystudent = this.students[index]
+          let output = `Marks of ${mystudent.name}
+                        Myan => ${mystudent.myan}
+                        Eng => ${mystudent.eng}
+                        Math => ${mystudent.math}`
+          alert(output)
         }
       }
     })

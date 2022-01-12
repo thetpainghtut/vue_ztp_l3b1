@@ -25,8 +25,17 @@
     <span v-else>Fail</span>
 
     <!-- Loops -->
+    <h2>All Students</h2>
+    <h5>Total Amount: {{totalAmount}}</h5>
     <ul>
       <li v-for="stud in students">
+        {{stud.name}} ({{stud.gender}})
+      </li>
+    </ul>
+
+    <h2>Boy Students</h2>
+    <ul>
+      <li v-for="stud in malestudents">
         {{stud.name}} ({{stud.gender}})
       </li>
     </ul>
@@ -53,15 +62,32 @@
         status: true,
         mark: 80,
         students: [
-          {name:'Aung Kyaw',gender:'male'},
-          {name:'Htein Lin',gender:'male'},
-          {name:'Thazin',gender:'female'},
+          {name:'Aung Kyaw',gender:'male', amount: 10},
+          {name:'Htein Lin',gender:'male', amount: 5},
+          {name:'Thazin',gender:'female', amount: 20},
         ],
         email: ''
       },
       methods:{
         reverseName(){
           this.name = this.name.split('').reverse().join('')
+        }
+      },
+      computed:{
+        malestudents(){
+          // let mstudents = []
+          // for(stu of this.students){
+          //   if(stu.gender == 'male'){
+          //     mstudents.push(stu)
+          //   }
+          // }
+
+          mstudents = this.students.filter(row => row.gender=='male')
+          return mstudents
+        },
+
+        totalAmount(){
+          return this.students.reduce((total,row) => total+row.amount,0)
         }
       }
     })
